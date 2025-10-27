@@ -14,16 +14,18 @@ section {
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
-}
-
-#slotB {
     align-items: center;
 }
 
 section div {
     width: 100px;
     height: 100px;
-
     margin: 5px;
-    background-color: green;
+    background-color: palegreen;
+    color: black; 
+    font-weight: bold;
+    font-family: Arial, sans-serif; 
+    display: flex;
+    justify-content: center;
+    align-items: center;  
 }
