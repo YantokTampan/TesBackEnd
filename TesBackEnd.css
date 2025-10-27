@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+section {
+    width: 1200px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: black;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+#slotB {
+    align-items: center;
+}
+
+section div {
+    width: 100px;
+    height: 100px;
+
+    margin: 5px;
+    background-color: green;
+}
