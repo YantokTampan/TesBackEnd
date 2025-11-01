@@ -18,28 +18,25 @@ SEMUA_SLOT = [f"A{i}" for i in range(1, 11)] + [f"B{i}" for i in range(1, 11)]
 def simulasi_parkir():
     """
     Simulasi ini mengirimkan update status parkir
-    secara acak setiap 3 detik.
+    UNTUK SEMUA SLOT sekaligus setiap 3 detik.
     """
-    print("Simulasi parkir dimulai...")
+    print("Simulasi parkir (Mode Batch) dimulai...")
     while True:
-        # Pilih slot acak
-        slot_terpilih = random.choice(SEMUA_SLOT)
+        # 1. Buat satu objek (dictionary) untuk menampung semua status
+        batch_data = {}
         
-        # Pilih status acak
-        status_terpilih = random.choice(['penuh', 'kosong'])
+        # 2. Isi objek tersebut dengan status acak untuk setiap slot
+        for slot in SEMUA_SLOT:
+            status_terpilih = random.choice(['penuh', 'kosong'])
+            batch_data[slot] = status_terpilih
+            
+        # 3. Mengirim (emit) SELURUH BATCH data dalam satu kali kirim
+        #    Kita bisa tetap pakai event 'status_parkir' atau ganti nama
+        #    (Mari kita ganti nama agar jelas)
+        socketio.emit('status_parkir_batch', batch_data)
+        print(f"Mengirim update batch: {len(batch_data)} slot")
         
-        # Buat data untuk dikirim
-        data = {
-            'slotId': slot_terpilih,
-            'status': status_terpilih
-        }
-        
-        # Mengirim (emit) data ke semua website yang terhubung
-        # 'status_parkir' adalah nama event yang didengarkan oleh app.js
-        socketio.emit('status_parkir', data)
-        print(f"Mengirim update: {data}")
-        
-        # Tunggu 3 detik sebelum mengirim update berikutnya
+        # 4. Tunggu 3 detik sebelum mengirim batch berikutnya
         socketio.sleep(3)
 
 
@@ -48,26 +45,20 @@ def simulasi_parkir():
 def handle_connect():
     print('Sebuah website telah terhubung!')
     
-    # Kirim status awal (semua kosong) saat baru terhubung
+    # Kirim status awal (semua kosong) dalam format BATCH
+    batch_data_awal = {}
     for slot in SEMUA_SLOT:
-        socketio.emit('status_parkir', {'slotId': slot, 'status': 'kosong'})
+        batch_data_awal[slot] = 'kosong'
+        
+    socketio.emit('status_parkir_batch', batch_data_awal)
+    print("Mengirim status batch awal (semua kosong).")
 
 # Event handler ketika website terputus
 @socketio.on('disconnect')
 def handle_disconnect():
     print('Koneksi website terputus.')
 
-# --- DI SINI ANDA INTEGRASIKAN LOGIKA YOLO ANDA ---
-#
-# Nanti, daripada menggunakan 'simulasi_parkir',
-# program YOLO Anda akan memanggil fungsi seperti ini:
-#
-# def update_status_dari_yolo(slot_id, status):
-#     data = {'slotId': slot_id, 'status': status}
-#     socketio.emit('status_parkir', data)
-#     print(f"YOLO update: {data}")
-#
-# ----------------------------------------------------
+# ... (sisa komentar Anda) ...
 
 
 if __name__ == '__main__':
