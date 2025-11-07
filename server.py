@@ -40,7 +40,7 @@ def simulasi_parkir():
         socketio.emit('status_parkir', data)
         print(f"Mengirim update: {data}")
         
-        # 5. Tunggu 3 detik (sesuai file asli Anda)
+        # 5. Tunggu 1 detik (sesuai file asli Anda)
         socketio.sleep(1)
 
 
@@ -83,5 +83,6 @@ if __name__ == '__main__':
                  port=port, 
                  debug=False,
                  allow_unsafe_werkzeug=True)
+
 
 
