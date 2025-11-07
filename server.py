@@ -41,7 +41,7 @@ def simulasi_parkir():
         print(f"Mengirim update: {data}")
         
         # 5. Tunggu 3 detik (sesuai file asli Anda)
-        socketio.sleep(3)
+        socketio.sleep(1)
 
 
 # Event handler ketika website (front-end) terhubung
@@ -83,4 +83,5 @@ if __name__ == '__main__':
                  port=port, 
                  debug=False,
                  allow_unsafe_werkzeug=True)
+
 
